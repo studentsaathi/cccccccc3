@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #ditil{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+        }
+        #ditil>div{
+            border-radius: 10px;
+            margin-bottom: 30px;
+            background-color: black;
+            
+            color: aliceblue;
+            height: 700px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+
+        }
+        #ditil>div>img{
+            border-radius: 10px;
+            height: 500px;
+            width: 100%;
+        }
+        #ditil>div>p{
+            color: red;
+            font-size: 20px;
+        }
+        #ditil>div>h1{
+            text-align: center;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 id="wallet"></h1>
+    </div>
+    
+    <div>
+        <input type="text" oninput="debouncFunction(main,1000)" id="query" placeholder="Enter Movies Name">
+    </div>
+    
+        <div id="ditil"></div>
+    
+
+    
+</body>
+</html>
+<script>
+    var showamount=document.getElementById("wallet")
+    showamount.innerText=`Total Amount :-${localStorage.getItem("amount")}`
+
+
+
+
+    let id;
+let movies_div=document.getElementById("ditil")
+
+
+ async function searchMovies(q){
+   try {
+    let url=`https://www.omdbapi.com/?s=${q}&apikey=c980f154`;
+    let res= await fetch (url)
+    let data= await res.json();
+    return data.Search;
+    console.log(data);
+
+   }
+   catch(error){
+       console.log('error:',error)
+   }
+
+} 
+
+let moviess=JSON.parse(localStorage.getItem("Movies")) ||[]
+function appendMovies (movies){
+    movies_div.innerHTML=null;
+   
+    if(movies===undefined){
+        return false;
+    }
+    movies.forEach(function(el){
+        let p=document.createElement("p")
+        p.innerText=`Year of release :-${el.Year}`
+        let rating=document.createElement("p")
+        rating.innerText=`imdb rating :-${el.imdbID}`
+        //div.append(p)
+        let img=document.createElement("img")
+        img.src=el.Poster;
+        let name=document.createElement("h1")
+        name.innerText=el.Title;
+        
+        let div=document.createElement("div")
+
+       // div.id="mov"
+       let btn=document.createElement("button")
+       btn.innerText="Book Movies"
+       btn.addEventListener("click",function(){
+           addMovies(el)
+       })
+        div.append(name,img,p,rating,btn)
+        movies_div.append(div)
+    });
+
+    
+}
+
+
+function addMovies(el){
+
+    moviess.push(el)
+    localStorage.setItem("Movies",JSON.stringify(moviess))
+    window.location.href="checkout.html"
+}
+
+
+
+ async function main(){
+    let query =document.getElementById("query").value;
+     let response=searchMovies(query);
+    let data =await response;
+    appendMovies(data);
+    console.log("data",data)
+
+}
+
+function debouncFunction(func,delay){
+    if(id){
+        clearTimeout(id)
+    }
+     id=setTimeout(function(){
+        func();
+    },delay);
+
+}
+
+
+
+
+    
+
+</script>

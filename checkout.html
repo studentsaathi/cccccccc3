@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1 id="wallet"></h1>
+        <form onsubmit="formSubmit()">
+            <input type="text" placeholder="Enter Name">
+        <input type="number"placeholder="Enter ticket no " id="ticket">
+        <input type="Submit">
+        </form>
+        <div id="showmovies">
+
+        </div>
+
+    </div>
+
+    
+</body>
+</html>
+<script>
+    var showamount=document.getElementById("wallet")
+    showamount.innerText=`Total Amount :-${localStorage.getItem("amount")}`
+
+    function formSubmit(){
+        
+
+        let ticket=document.getElementById("ticket").value;
+        let a=ticket*100;
+        console.log(a)
+        if(a<=localStorage.getItem("amount")){
+            alert("your ticket conformed")
+            let total=localStorage.getItem("amount")-a;
+            localStorage.setItem("amount",total)
+
+        }
+        else{
+            alert("your amount is low ticket not confromed")
+        }
+
+    }
+    //formSubmit()
+
+
+
+
+
+    let data =JSON.parse(localStorage.getItem("Movies"))
+    data.map(function(el,index){
+        let showmovies=document.getElementById("showmovies")
+        let div=document.createElement("div")
+        let image=document.createElement("img")
+        let name=document.createElement("h1")
+        name.innerText=el.Title;
+        image.src=el.Poster;
+        div.append(name,image)
+        showmovies.append(div);
+
+
+    })
+    
+
+</script>

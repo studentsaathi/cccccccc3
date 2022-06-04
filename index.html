@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>ADD Maney</h1>
+        <h1 id="wallet">0</h1>
+    </div>
+    <input type="number" placeholder="Enter amount" id="amount">
+    <button onclick="addamoun()"> Add maney</button>
+    
+
+
+
+    <button ><a href="movies.html">movies</a></button>
+    
+</body>
+</html>
+<script>
+    function totalamount(amount){
+
+        this.amount=amount
+}
+    function addamoun(){
+        var amount=document.getElementById("amount").value
+       
+   
+       let show=document.getElementById("wallet");
+       let v = +(show.textContent);
+       let total=+amount+v
+       show.innerText=+amount+v;
+ 
+     localStorage.setItem("amount",total)
+   
+   
+
+    }
+    // var showamount=document.getElementById("wallet")
+    // showamount.innerText=`Total Amount :-${localStorage.getItem("amount")}`
+
+
+    // function checkout(){
+    //     window.location.href="checkout.html";
+
+    // }
+    // //checkout()
+
+    
+    
+
+</script>
